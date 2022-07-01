@@ -1,0 +1,8 @@
+CHIP Threeor{
+IN a,b,c;
+OUT out;
+
+PARTS:
+Or(a=a,b=b,out=T1);
+Or(a=T1,b=c,out=out);
+}

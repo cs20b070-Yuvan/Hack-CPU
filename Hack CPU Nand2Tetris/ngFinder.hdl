@@ -1,0 +1,23 @@
+// This file is written by G.Tej Pavan cs20b029,S.Keerthi cs20b071,S.Yuvan cs20b070
+// File name:assignment7/ngFinder.hdl
+
+/**
+ * 
+ * we get the required output
+**/
+
+CHIP ngFinder {
+    IN X[16];
+    OUT out;
+
+    PARTS:
+
+    //Defining zero and one
+    Not(in=X[0], out=notx0);
+    And(a=X[0] ,b=notx0 ,out=zero);
+    Not(in=zero ,out=one);
+
+    Xor(a=X[15] ,b=zero ,out=out);
+
+    
+}

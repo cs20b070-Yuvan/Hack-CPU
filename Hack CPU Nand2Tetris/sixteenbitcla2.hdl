@@ -1,0 +1,153 @@
+// This file is written by S.Yuvan cs20b070,S.Keerthi cs20b071,G.Tej Pavan cs20b029
+// File name:assignment4/01/sixteenbitcla2.hdl
+
+/**
+ *  This is 16bitadder using 4bit cla's and Higher Order Propagation Terms
+ *  c is for telling addition or subtraction c=0 means + c=1 means -
+ *  u is for choosing signed or unsigned 0 is for unsigned and 1 is for unsigned
+ *  of is for overflow detection 0 for no overflow and 1 for overflown
+ **/
+
+CHIP sixteenbitcla2{
+  IN x[16],y[16],c,u;
+  OUT S[16],of,carry;
+
+PARTS:
+
+    Xor(a=y[0] , b=c, out=y0);
+    Xor(a=y[1] , b=c, out=y1);
+    Xor(a=y[2] , b=c, out=y2);
+    Xor(a=y[3] , b=c, out=y3);
+    Xor(a=y[4] , b=c, out=y4);
+    Xor(a=y[5] , b=c, out=y5);
+    Xor(a=y[6] , b=c, out=y6);
+    Xor(a=y[7] , b=c, out=y7);
+    Xor(a=y[8] , b=c, out=y8); 
+    Xor(a=y[9] , b=c, out=y9);
+    Xor(a=y[10] , b=c, out=y10);
+    Xor(a=y[11] , b=c, out=y11);
+    Xor(a=y[12] , b=c, out=y12);
+    Xor(a=y[13] , b=c, out=y13);
+    Xor(a=y[14] , b=c, out=y14);
+    Xor(a=y[15] , b=c, out=y15);
+    
+    Xor(a=x[0],b=y0,out=p0);
+    Xor(a=x[1],b=y1,out=p1);
+    Xor(a=x[2],b=y2,out=p2);
+    Xor(a=x[3],b=y3,out=p3);
+    Xor(a=x[4],b=y4,out=p4);
+    Xor(a=x[5],b=y5,out=p5);
+    Xor(a=x[6],b=y6,out=p6);
+    Xor(a=x[7],b=y7,out=p7);
+    Xor(a=x[8],b=y8,out=p8);
+    Xor(a=x[9],b=y9,out=p9);
+    Xor(a=x[10],b=y10,out=p10);
+    Xor(a=x[11],b=y11,out=p11);
+    Xor(a=x[12],b=y12,out=p12);
+    Xor(a=x[13],b=y13,out=p13);
+    Xor(a=x[14],b=y14,out=p14);
+    Xor(a=x[15],b=y15,out=p15);
+
+    And(a=x[0],b=y0,out=g0);
+    And(a=x[1],b=y1,out=g1);
+    And(a=x[2],b=y2,out=g2);
+    And(a=x[3],b=y3,out=g3);
+    And(a=x[4],b=y4,out=g4);
+    And(a=x[5],b=y5,out=g5);
+    And(a=x[6],b=y6,out=g6);
+    And(a=x[7],b=y7,out=g7);
+    And(a=x[8],b=y8,out=g8);
+    And(a=x[9],b=y9,out=g9);
+    And(a=x[10],b=y10,out=g10);
+    And(a=x[11],b=y11,out=g11);
+    And(a=x[12],b=y12,out=g12);
+    And(a=x[13],b=y13,out=g13);
+    And(a=x[14],b=y14,out=g14);
+    And(a=x[15],b=y15,out=g15);
+
+/* now developing higher order terms
+  p0i,p1i,p2i,p3i
+  g0i,g1i,g2i,g3i
+  
+  where p0i=p0*p1*p2*p3;
+  & g0i=p3*p2*p1*g0+p3*p2*g1+p3*g2+g3
+*/
+
+    Fourand(a=p0,b=p1,c=p2,d=p3,out=p0i);
+    Fourand(a=p4,b=p5,c=p6,d=p7,out=p1i);
+    Fourand(a=p8,b=p9,c=p10,d=p11,out=p2i);
+    Fourand(a=p12,b=p13,c=p14,d=p15,out=p3i);
+
+    Fourand(a=p3,b=p2,c=p1,d=g0,out=Tg011);
+    Threeand(a=p3,b=p2,c=g1,out=Tg012);
+    And(a=p3,b=g2,out=Tg013);
+
+    Fouror(a=Tg011,b=Tg012,c=Tg013,d=g3,out=g0i);
+
+    Fourand(a=p7,b=p6,c=p5,d=g4,out=Tg021);
+    Threeand(a=p7,b=p6,c=g5,out=Tg022);
+    And(a=p7,b=g6,out=Tg023);
+
+    Fouror(a=Tg021,b=Tg022,c=Tg023,d=g7,out=g1i);
+
+    Fourand(a=p11,b=p10,c=p9,d=g8,out=Tg031);
+    Threeand(a=p11,b=p10,c=g9,out=Tg032);
+    And(a=p11,b=g10,out=Tg033);
+
+    Fouror(a=Tg031,b=Tg032,c=Tg033,d=g11,out=g2i);
+
+    Fourand(a=p15,b=p14,c=p13,d=g12,out=Tg041);
+    Threeand(a=p15,b=p14,c=g13,out=Tg042);
+    And(a=p15,b=g14,out=Tg043);
+
+    Fouror(a=Tg041,b=Tg042,c=Tg043,d=g15,out=g3i);
+
+/* generating carries c4 c8 c12 c16
+
+  c4=p0i*c+g0i
+  c8=p0i*p1i*c + p1i*g0i+ g1i
+  c12=p2i*p1i*p01*c+p2i*p1i*g0i+p2i*g1i+g2i
+  c16=p3i*p2i*p1i*p01*c+p3i*p2i*p1i*g0i+p3i*p2i*g1i+p3i*g3i+g3i
+
+*/
+
+    And(a=p0i,b=c,out=Tc41);
+    Or(a=Tc41,b=g0i,out=c4);
+
+    Threeand(a=p0i,b=p1i,c=c,out=Tc81);
+    And(a=p1i,b=g0i,out=Tc82);
+    Threeor(a=Tc81,b=Tc82,c=g1i,out=c8);
+
+    Fourand(a=p2i,b=p1i,c=p0i,d=c,out=Tc121);
+    Threeand(a=p2i,b=p1i,c=g0i,out=Tc122);
+    And(a=p2i,b=g1i,out=Tc123);
+    Fouror(a=Tc121,b=Tc122,c=Tc123,d=g2i,out=c12);
+
+    Fiveand(a=p3i,b=p2i,c=p1i,d=p0i,e=c,out=Tc161);
+    Fourand(a=p3i,b=p2i,c=p1i,d=g0i,out=Tc162);
+    Threeand(a=p3i,b=p2i,c=g1i,out=Tc163);
+    And(a=p3i,b=g3i,out=Tc164);
+    Fiveor(a=Tc161,b=Tc162,c=Tc163,d=Tc164,e=g3i,out=c16);
+
+//To add x,y and carry bits using ClA's 
+
+    //Here c4,c8,c12,c16 are not taken from cla
+    //They are calculated above using Higher order propagate terms
+    fourbitcla(X0=x[0] ,X1=x[1] ,X2=x[2] ,X3=x[3] ,Y0=y0 ,Y1=y1 ,Y2=y2 ,Y3=y3 ,C0=c ,S0=S[0],S1=S[1],S2=S[2],S3=S[3],prevcarry=C3,carry=C4);
+    fourbitcla(X0=x[4] ,X1=x[5] ,X2=x[6] ,X3=x[7] ,Y0=y4 ,Y1=y5 ,Y2=y6 ,Y3=y7 ,C0=c4 ,S0=S[4],S1=S[5],S2=S[6],S3=S[7],prevcarry=C7,carry=C8);
+    fourbitcla(X0=x[8] ,X1=x[9] ,X2=x[10] ,X3=x[11] ,Y0=y8 ,Y1=y9 ,Y2=y10 ,Y3=y11 ,C0=c8 ,S0=S[8],S1=S[9],S2=S[10],S3=S[11],prevcarry=C11,carry=C12);
+    fourbitcla(X0=x[12] ,X1=x[13] ,X2=x[14] ,X3=x[15] ,Y0=y12 ,Y1=y13 ,Y2=y14 ,Y3=y15 ,C0=c12,S0=S[12],S1=S[13],S2=S[14],S3=S[15],prevcarry=C15,carry=C16);
+
+
+    //To find overflow
+    Not(in=u,out=notu);
+    Xor(a=c,b=C16,out=t1);
+    And(a=notu,b=t1,out=term1);
+    Xor(a=C16,b=C15,out=t2);
+    And(a=u,b=t2,out=term2);
+    Or(a=term1,b=term2,out=of);
+    
+    //To find carry (c16)
+    Not(in=c16, out=notcarry);
+    Not(in=notcarry, out=carry);
+}

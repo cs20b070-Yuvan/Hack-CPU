@@ -1,0 +1,40 @@
+// This file is written by G.Tej Pavan cs20b029,S.Keerthi cs20b071,S.Yuvan cs20b070
+// File name:assignment7/noFinder.hdl
+
+/**
+ * 
+ * 
+**/
+
+CHIP zrFinder{
+    IN X[16];
+    OUT out;
+
+    PARTS:
+
+    //Defining zero and one
+    Not(in=X[0], out=notx0);
+    And(a=X[0] ,b=notx0 ,out=zero);
+    Not(in=zero ,out=one);
+
+    Or(a=X[0] ,b=X[1] ,out=x01);
+    Or(a=X[2] ,b=X[3] ,out=x23);
+    Or(a=X[4] ,b=X[5] ,out=x45);
+    Or(a=X[6] ,b=X[7] ,out=x67);
+    Or(a=X[8] ,b=X[9] ,out=x89);
+    Or(a=X[10] ,b=X[11] ,out=x101);
+    Or(a=X[12] ,b=X[13] ,out=x123);
+    Or(a=X[14] ,b=X[15] ,out=x145);
+    
+    Or(a=x01, b=x23 ,out=t11);
+    Or(a=x45, b=x67 ,out=t12);
+    Or(a=x89, b=x101 ,out=t13);
+    Or(a=x123, b=x145 ,out=t14);
+
+    Or(a=t11 ,b=t12 ,out=s0);
+    Or(a=t13 ,b=t14 ,out=s1);
+
+    Or(a=s0 ,b=s1 ,out=s);
+
+    Not(in=s ,out=out);
+}

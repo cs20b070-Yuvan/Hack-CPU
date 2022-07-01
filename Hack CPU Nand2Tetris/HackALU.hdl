@@ -1,0 +1,38 @@
+// This file is written by G.Tej Pavan cs20b029,S.Keerthi cs20b071,S.Yuvan cs20b070
+// File name:assignment7/HackALU.hdl
+
+/**
+ * 
+ * we get the required output
+**/
+
+CHIP HackALU {
+    IN X[16],Y[16],zx,nx,zy,ny,f,no;
+    OUT out[16],zr,ng;
+
+    PARTS:
+
+    //Defining zero and one
+    Not(in=f, out=notf);
+    And(a=f ,b=notf ,out=zero);
+    Not(in=zero ,out=one);
+
+    SixteenBitTwoToOneMux(X=X,C2=zx,Z=Xnew);
+    SixteenBitTwoToOneMux(X=Y,C2=zy,Z=Ynew);
+
+    XOR16(a=Xnew ,b=nx ,out=p);
+    XOR16(a=Ynew ,b=ny ,out=q);
+
+    And16(a=p ,b=q ,out=pandq);
+    sixteenbitcla2(x=p ,y=q ,u=one ,c=zero ,S=psumq ,of=overf ,carry=carry);
+
+    SixteenBitTwoToOneMux(X=pandq,Y=psumq,C2=f,Z=r);
+
+    XOR16(a=r, b=no ,out=tempout);
+
+    XOR16(a=tempout ,b=zero ,out=out);
+
+    ngFinder(X=tempout ,out=ng);
+
+    zrFinder(X=tempout ,out=zr);
+}

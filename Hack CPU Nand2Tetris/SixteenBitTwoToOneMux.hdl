@@ -1,0 +1,89 @@
+// This file is written by S.Yuvan cs20b070,S.Keerthi cs20b071,G.Tej Pavan cs20b029
+// File name:assignment5/SixteenBitTwoToOneMux.hdl
+
+/**
+ * inputs are X,Y
+ * each OF 16 BITS
+ * if C2=0 then Z = X
+ * else Z=Y
+**/
+
+CHIP SixteenBitTwoToOneMux {
+    IN X[16],Y[16],C2;
+    OUT Z[16];
+    
+    PARTS:
+    // First we should write the Xnor of each corresponding bits Xnor(Xi,Yi);
+    // Xnor(x,y) = Not(Xor(x,y));
+    Not(in=C2, out=nC2);
+
+    And(a=nC2, b=X[0] , out=t00);
+    And(a=C2, b=Y[0] , out=t01);
+    Or(a=t00, b=t01, out=Z[0]);
+
+
+    And(a=nC2, b=X[1] , out=t10);
+    And(a=C2, b=Y[1] , out=t11);
+    Or(a=t10, b=t11, out=Z[1]);
+
+    And(a=nC2, b=X[2] , out=t20);
+    And(a=C2, b=Y[2] , out=t21);
+    Or(a=t20, b=t21, out=Z[2]);
+
+
+    And(a=nC2, b=X[3] , out=t30);
+    And(a=C2, b=Y[3] , out=t31);
+    Or(a=t30, b=t31, out=Z[3]);
+
+    And(a=nC2, b=X[4] , out=t40);
+    And(a=C2, b=Y[4] , out=t41);
+    Or(a=t40, b=t41, out=Z[4]);
+
+    And(a=nC2, b=X[5] , out=t50);
+    And(a=C2, b=Y[5] , out=t51);
+    Or(a=t50, b=t51, out=Z[5]);
+
+    And(a=nC2, b=X[6] , out=t60);
+    And(a=C2, b=Y[6] , out=t61);
+    Or(a=t60, b=t61, out=Z[6]);
+
+    And(a=nC2, b=X[7] , out=t70);
+    And(a=C2, b=Y[7] , out=t71);
+    Or(a=t70, b=t71, out=Z[7]);
+
+
+    And(a=nC2, b=X[8] , out=t80);
+    And(a=C2, b=Y[8] , out=t81);
+    Or(a=t80, b=t81, out=Z[8]);
+
+
+    And(a=nC2, b=X[9] , out=t90);
+    And(a=C2, b=Y[9] , out=t91);
+    Or(a=t90, b=t91, out=Z[9]);
+
+    And(a=nC2, b=X[10] , out=t100);
+    And(a=C2, b=Y[10] , out=t101);
+    Or(a=t100, b=t101, out=Z[10]);
+
+
+    And(a=nC2, b=X[11] , out=t110);
+    And(a=C2, b=Y[11] , out=t111);
+    Or(a=t110, b=t111, out=Z[11]);
+
+    And(a=nC2, b=X[12] , out=t120);
+    And(a=C2, b=Y[12] , out=t121);
+    Or(a=t120, b=t121, out=Z[12]);
+
+    And(a=nC2, b=X[13] , out=t130);
+    And(a=C2, b=Y[13] , out=t131);
+    Or(a=t130, b=t131, out=Z[13]);
+
+
+    And(a=nC2, b=X[14] , out=t140);
+    And(a=C2, b=Y[14] , out=t141);
+    Or(a=t140, b=t141, out=Z[14]);
+
+    And(a=nC2, b=X[15] , out=t150);
+    And(a=C2, b=Y[15] , out=t151);
+    Or(a=t150, b=t151, out=Z[15]);
+}

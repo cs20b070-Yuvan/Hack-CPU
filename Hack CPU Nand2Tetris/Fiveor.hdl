@@ -1,0 +1,18 @@
+// This file is written by S.Yuvan cs20b070,S.Keerthi cs20b071,G.Tej Pavan cs20b029
+// File name:assignment3/03/Fiveor.hdl
+
+/**
+ * Fiveor
+ * let inputs be a,b,c,d,e outputs be OR(a,b,c,d,e)
+**/
+
+CHIP Fiveor {
+IN a,b,c,d,e;
+OUT out;
+
+PARTS:
+Or(a=a,b=b,out=e1);
+Or(a=d,b=c,out=e2);
+Or(a=e,b=e1,out=e3);
+Or(a=e2,b=e3,out=out);
+}

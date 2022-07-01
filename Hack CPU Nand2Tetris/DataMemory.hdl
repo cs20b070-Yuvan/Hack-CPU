@@ -1,0 +1,14 @@
+// This file is written by S.Yuvan cs20b070,G.Tej Pavan cs20b029,S.Keerthi cs20b071 
+// File name:assignment8/DataMemory.hdl
+
+
+CHIP DataMemory {
+
+    IN in[16], load, address[15];
+    OUT out[16];
+
+    PARTS:
+
+    DMux(in=load, sel=address[14], a=loadRAM, b=noloadRam);
+    RAM16K(in=in, load=loadRAM, address=address[0..13], out=out);
+}

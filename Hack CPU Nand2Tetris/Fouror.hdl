@@ -1,0 +1,10 @@
+CHIP Fouror{
+IN a,b,c,d;
+OUT out;
+
+
+PARTS:
+Or(a=a,b=b,out=T1);
+Or(a=c,b=d,out=T2);
+Or(a=T1,b=T2,out=out);
+}
